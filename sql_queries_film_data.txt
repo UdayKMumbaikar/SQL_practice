@@ -16,3 +16,13 @@ WHERE country_id IS NULL;
 SELECT *
 FROM film 
 WHERE rating IS NULL; 
+
+SELECT *
+FROM film limit 10; 
+
+
+SELECT title, REPLACE(cast(fulltext as text), ':', 'M') as newfulltext from film;
+
+SELECT first_name || ' ' || last_name AS full_name
+FROM Actor; 
+ 
