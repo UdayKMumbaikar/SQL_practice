@@ -1,0 +1,15 @@
+CREATE TABLE olist_geolocation_dataset (
+    geolocation_id SERIAL PRIMARY KEY,
+    geolocation_zip_code_prefix INTEGER NOT NULL,
+    geolocation_lat FLOAT NOT NULL,
+    geolocation_lng FLOAT NOT NULL,
+    geolocation_city VARCHAR(255) NOT NULL,
+    geolocation_state CHAR(2) NOT NULL
+);
+
+
+
+
+
+
+

@@ -1,12 +1,26 @@
 import os
 from dotenv import load_dotenv
 import psycopg2
+import csv
 
 load_dotenv()
 
 def insert_csv_to_db(csv_file_path, table_name, db_config):
     # Your existing code for inserting CSV to DB
-    pass
+    conn = psycopg2.connect(**db_config)
+    cursor = conn.cursor()
+    
+    with open(csv_file_path, 'r') as f:
+        reader = csv.reader(f)
+        headers = next(reader)
+        query = f"INSERT INTO {table_name} ({', '.join(headers)}) VALUES %s"
+        
+        for row in reader:
+            cursor.execute(query, (tuple(row),))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 try:
     db_config = {
@@ -20,8 +34,8 @@ try:
     conn = psycopg2.connect(**db_config)
     cursor = conn.cursor()
     
-    csv_file_path = '/path/to/your/csvfile.csv'
-    table_name = 'your_table_name'
+    csv_file_path = os.path.join(os.getcwd(), 'olist_data','olist_geolocation_dataset.csv')
+    table_name = 'olist_geolocation_dataset'
     
     insert_csv_to_db(csv_file_path, table_name, db_config)
     
