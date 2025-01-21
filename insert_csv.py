@@ -34,8 +34,12 @@ try:
     conn = psycopg2.connect(**db_config)
     cursor = conn.cursor()
     
-    csv_file_path = os.path.join(os.getcwd(), 'olist_data','olist_geolocation_dataset.csv')
-    table_name = 'olist_geolocation_dataset'
+    # csv_file_path = os.path.join(os.getcwd(), 'olist_data','olist_geolocation_dataset.csv')
+    # table_name = 'olist_geolocation_dataset'
+
+
+    csv_file_path = os.path.join(os.getcwd(), 'olist_data','olist_customers_dataset.csv')
+    table_name = 'olist_customers_dataset'
     
     insert_csv_to_db(csv_file_path, table_name, db_config)
     

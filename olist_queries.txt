@@ -7,9 +7,27 @@ CREATE TABLE olist_geolocation_dataset (
     geolocation_state CHAR(2) NOT NULL
 );
 
+CREATE TABLE olist_customers_dataset (
+    customer_id SERIAL PRIMARY KEY,
+    customer_unique_id VARCHAR(255) NOT NULL,
+    customer_zip_code_prefix INTEGER NOT NULL,
+    customer_city VARCHAR(255) NOT NULL,
+    customer_state CHAR(2) NOT NULL
+);
+
+DROP TABLE olist_customers_dataset;
 
 
+'''Dropped table and updated schema as error occured while loading data'''
 
+CREATE TABLE olist_customers_dataset (
+    customer_id_num SERIAL PRIMARY KEY,
+	customer_id VARCHAR(255) NOT NULL,
+    customer_unique_id VARCHAR(255) NOT NULL,
+    customer_zip_code_prefix INTEGER NOT NULL,
+    customer_city VARCHAR(255) NOT NULL,
+    customer_state CHAR(2) NOT NULL
+);
 
 
 
