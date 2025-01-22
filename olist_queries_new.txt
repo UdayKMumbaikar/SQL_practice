@@ -1,0 +1,145 @@
+Tables in the database:
+
+Table: olist_customers_dataset
+Column: customer_id, Type: TEXT
+Column: customer_unique_id, Type: TEXT
+Column: customer_zip_code_prefix, Type: BIGINT
+Column: customer_city, Type: TEXT
+Column: customer_state, Type: TEXT
+
+Table: product_category_name_translation
+Column: product_category_name, Type: TEXT
+Column: product_category_name_english, Type: TEXT
+
+Table: olist_order_items_dataset
+Column: order_id, Type: TEXT
+Column: order_item_id, Type: BIGINT
+Column: product_id, Type: TEXT
+Column: seller_id, Type: TEXT
+Column: shipping_limit_date, Type: TEXT
+Column: price, Type: DOUBLE PRECISION
+Column: freight_value, Type: DOUBLE PRECISION
+
+Table: olist_orders_dataset
+Column: order_id, Type: TEXT
+Column: customer_id, Type: TEXT
+Column: order_status, Type: TEXT
+Column: order_purchase_timestamp, Type: TEXT
+Column: order_approved_at, Type: TEXT
+Column: order_delivered_carrier_date, Type: TEXT
+Column: order_delivered_customer_date, Type: TEXT
+Column: order_estimated_delivery_date, Type: TEXT
+
+Table: olist_sellers_dataset
+Column: seller_id, Type: TEXT
+Column: seller_zip_code_prefix, Type: BIGINT
+Column: seller_city, Type: TEXT
+Column: seller_state, Type: TEXT
+
+Table: olist_geolocation_dataset
+Column: geolocation_zip_code_prefix, Type: BIGINT
+Column: geolocation_lat, Type: DOUBLE PRECISION
+Column: geolocation_lng, Type: DOUBLE PRECISION
+Column: geolocation_city, Type: TEXT
+Column: geolocation_state, Type: TEXT
+
+Table: olist_products_dataset
+Column: product_id, Type: TEXT
+Column: product_category_name, Type: TEXT
+Column: product_name_lenght, Type: DOUBLE PRECISION
+Column: product_description_lenght, Type: DOUBLE PRECISION
+Column: product_photos_qty, Type: DOUBLE PRECISION
+Column: product_weight_g, Type: DOUBLE PRECISION
+Column: product_length_cm, Type: DOUBLE PRECISION
+Column: product_height_cm, Type: DOUBLE PRECISION
+Column: product_width_cm, Type: DOUBLE PRECISION
+
+Table: olist_order_reviews_dataset
+Column: review_id, Type: TEXT
+Column: order_id, Type: TEXT
+Column: review_score, Type: BIGINT
+Column: review_comment_title, Type: TEXT
+Column: review_comment_message, Type: TEXT
+Column: review_creation_date, Type: TEXT
+Column: review_answer_timestamp, Type: TEXT
+
+Table: olist_order_payments_dataset
+Column: order_id, Type: TEXT
+Column: payment_sequential, Type: BIGINT
+Column: payment_type, Type: TEXT
+Column: payment_installments, Type: BIGINT
+Column: payment_value, Type: DOUBLE PRECISION
+
+
+sql query for list of tables in olist database:
+SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
+"olist_customers_dataset"
+"product_category_name_translation"
+"olist_order_items_dataset"
+"olist_orders_dataset"
+"olist_sellers_dataset"
+"olist_geolocation_dataset"
+"olist_products_dataset"
+"olist_order_reviews_dataset"
+"olist_order_payments_dataset"
+
+sql query for list of columns in olist_customers_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_customers_dataset';
+"customer_zip_code_prefix"	"bigint"
+"customer_id"	"text"
+"customer_unique_id"	"text"
+"customer_city"	"text"
+"customer_state"	"text"
+
+sql query for list of columns in product_category_name_translation table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'product_category_name_translation';
+
+
+sql query for list of columns in olist_order_items_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_order_items_dataset';
+
+
+sql query for list of columns in olist_orders_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_orders_dataset';
+
+
+
+sql query for list of columns in olist_sellers_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_sellers_dataset';
+
+
+sql query for list of columns in olist_geolocation_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_geolocation_dataset';
+
+
+
+sql query for list of columns in olist_products_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_products_dataset';
+
+
+sql query for list of columns in olist_order_reviews_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_order_reviews_dataset';
+
+
+sql query for list of columns in olist_order_payments_dataset table:
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'olist_order_payments_dataset';
+
+
+update constraints for olist_customers_dataset table:
+ALTER TABLE olist_customers_dataset ADD CONSTRAINT customer_id_pk PRIMARY KEY (customer_id);
+
+update constraints for product_category_name_translation table:
+ALTER TABLE product_category_name_translation ADD CONSTRAINT product_category_name_pk PRIMARY KEY (product_category_name);
+
+get number of orders for each customer:
+SELECT customer_id, COUNT(order_id) FROM olist_orders_dataset GROUP BY customer_id;
+
+find customers who gave more than one order:
+SELECT customer_id, COUNT(order_id) FROM olist_orders_dataset GROUP BY customer_id HAVING COUNT(order_id) > 1;
+
+
+find number of orders from each customer_city by joining olist_orders_dataset and olist_customers_dataset on customer_id:
+SELECT customer_city, COUNT(order_id) FROM olist_orders_dataset JOIN olist_customers_dataset ON olist_orders_dataset.customer_id = olist_customers_dataset.customer_id GROUP BY customer_city;
+
+find city with max orders by joining olist_orders_dataset and olist_customers_dataset on customer_id:
+SELECT customer_city, COUNT(order_id) FROM olist_orders_dataset JOIN olist_customers_dataset ON olist_orders_dataset.customer_id = olist_customers_dataset.customer_id GROUP BY customer_city ORDER BY COUNT(order_id) DESC LIMIT 1;

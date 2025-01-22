@@ -26,4 +26,7 @@ tables = inspector.get_table_names()
 
 print("Tables in the database:")
 for table in tables:
-    print(table)
+    print(f"\nTable: {table}")
+    columns = inspector.get_columns(table)
+    for column in columns:
+        print(f"Column: {column['name']}, Type: {column['type']}")
